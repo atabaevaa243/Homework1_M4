@@ -27,33 +27,43 @@ class ViewController: UIViewController {
         Category(categoryImage: "pharmacy", categoryLabel: "Pharmacy")
     ]
     
-    private let productArray: [Product] = [
-        Product(
-            productImage: "burgerImage",
-            productName: "Burger Craze",
-            openClose: "OPEN",
-            productRatingFirst: "4.6",
-            productRatingSecond: "601",
-            productCountry: "American",
-            productType: "Burgers",
-            productDelivery: "Delivery: FREE",
-            productDeliveryPrice: "Minimum: $10",
-            deliveryTime: "15-20 min",
-            productDestination: "1.5 km away"
-        ),
-        Product(
-            productImage: "pizzaImage",
-            productName: "Vegetarian Pizza",
-            openClose: "OPEN",
-            productRatingFirst: "4.6",
-            productRatingSecond: "601",
-            productCountry: "Italian",
-            productType: "Pizza",
-            productDelivery: "Delivery: FREE",
-            productDeliveryPrice: "Minimum: $10",
-            deliveryTime: "10-15 min",
-            productDestination: "2.0 km away"
-        )
+    var productsArray: [Product] = [
+            Product(
+                productImage: "burgerImage",
+                productName: "Burger Craze",
+                productTime: "Open",
+                productReting: "4.6 (601)",
+                productCountry: "American",
+                productType: "Burgers",
+                productDelivery: "Delivery: FREE",
+                productDeliveryPrice: "Minimum: $10",
+                timeOfDelivery: "15-20 min",
+                productLocation: "1.5 km away"
+            ),
+            Product(
+                productImage: "pizzaImage",
+                productName: "Vegetarian Pizza",
+                productTime: "Open",
+                productReting: "4.6 (601)",
+                productCountry: "Italian",
+                productType: "Pizza",
+                productDelivery: "Delivery: FREE",
+                productDeliveryPrice: "Minimum: $10",
+                timeOfDelivery: "10-15 min",
+                productLocation: "1.8 km away"
+            ),
+            Product(
+                productImage: "burgerImage",
+                productName: "Burger Craze",
+                productTime: "Open",
+                productReting: "4.6 (601)",
+                productCountry: "American",
+                productType: "Burgers",
+                productDelivery: "Delivery: FREE",
+                productDeliveryPrice: "Minimum: $10",
+                timeOfDelivery: "15-20 min",
+                productLocation: "1.5 km away"
+            )
     ]
 
     override func viewDidLoad() {
@@ -91,10 +101,10 @@ class ViewController: UIViewController {
             productTableView.dataSource = self
             productTableView.register(
                 UINib(
-                    nibName: String(describing: ProductTableViewCell.self),
+                    nibName: String(describing: ProductsTableViewCell.self),
                     bundle: nil
                 ),
-                forCellReuseIdentifier: ProductTableViewCell.reuseIdentifier)
+                forCellReuseIdentifier: ProductsTableViewCell.reuseIdentifier)
         }
     }
 
@@ -130,8 +140,6 @@ extension ViewController: UICollectionViewDataSource {
             return cell
         }
     }
-    
-    
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
@@ -150,31 +158,27 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return productArray.count
+        return productsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: ProductTableViewCell.reuseIdentifier,
+            withIdentifier: ProductsTableViewCell.reuseIdentifier,
             for: indexPath
-        ) as! ProductTableViewCell
-        let model = productArray[indexPath.item]
+        ) as! ProductsTableViewCell
+        let model = productsArray[indexPath.item]
         cell.display(
             image: model.productImage,
             name: model.productName,
-            openClose: model.openClose,
-            ratingFirst: model.productRatingFirst,
-            ratingSecond: model.productRatingSecond,
+            time: model.productTime,
+            reting: model.productReting,
             country: model.productCountry,
-            type: model.productType,
+            productType: model.productType,
             delivery: model.productDelivery,
             deliveryPrice: model.productDeliveryPrice,
-            deliveryTime: model.deliveryTime,
-            destination: model.productDestination
-        )
+            timeOfDelivery: model.timeOfDelivery,
+            location: model.productLocation)
         
         return cell
     }
-    
-    
 }

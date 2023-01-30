@@ -99,6 +99,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="452" id="q8M-go-eIQ"/>
                                 </constraints>
+                                <color key="sectionIndexBackgroundColor" red="0.50980392159999999" green="0.76862745099999996" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

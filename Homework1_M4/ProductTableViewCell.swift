@@ -1,45 +1,42 @@
 
 import UIKit
 
-class ProductTableViewCell: UITableViewCell {
-    
-    static let reuseIdentifier = String(describing: ProductTableViewCell.self)
+class ProductsTableViewCell: UITableViewCell {
+
+    static let reuseIdentifier = String(describing: ProductsTableViewCell.self)
     
     @IBOutlet private weak var productImageView: UIImageView!
     @IBOutlet private weak var productNameLabel: UILabel!
-    @IBOutlet private weak var openCloseLabel: UILabel!
-    @IBOutlet private weak var productRatingFirstLabel: UILabel!
-    @IBOutlet private weak var productRatingSecondLabel: UILabel!
+    @IBOutlet private weak var productTimeLabel: UILabel!
+    @IBOutlet private weak var productRetingLabel: UILabel!
     @IBOutlet private weak var productCountryLabel: UILabel!
     @IBOutlet private weak var productTypeLabel: UILabel!
     @IBOutlet private weak var productDeliveryLabel: UILabel!
     @IBOutlet private weak var productDeliveryPriceLabel: UILabel!
-    @IBOutlet private weak var deliveryTimeLabel: UILabel!
-    @IBOutlet private weak var productDestinationLabel: UILabel!
+    @IBOutlet private weak var timeOfDeliveryLabel: UILabel!
+    @IBOutlet private weak var productLocationLabel: UILabel!
     
     func display(
         image: String,
         name: String,
-        openClose: String,
-        ratingFirst: String,
-        ratingSecond: String,
+        time: String,
+        reting: String,
         country: String,
-        type: String,
+        productType: String,
         delivery: String,
         deliveryPrice: String,
-        deliveryTime: String,
-        destination: String
+        timeOfDelivery: String,
+        location: String
     ) {
         productImageView.image = UIImage(named: image)
         productNameLabel.text = name
-        openCloseLabel.text = openClose
-        productRatingFirstLabel.text = ratingFirst
-        productRatingSecondLabel.text = ratingSecond
+        productTimeLabel.text = time
+        productRetingLabel.text = reting
         productCountryLabel.text = country
-        productTypeLabel.text = type
+        productTypeLabel.text = productType
         productDeliveryLabel.text = delivery
         productDeliveryPriceLabel.text = deliveryPrice
-        deliveryTimeLabel.text = deliveryTime
-        productDestinationLabel.text = destination
+        timeOfDeliveryLabel.text = timeOfDelivery
+        productLocationLabel.text = location
     }
 }
