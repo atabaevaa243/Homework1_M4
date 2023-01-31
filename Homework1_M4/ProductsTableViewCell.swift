@@ -16,7 +16,6 @@ class ProductsTableViewCell: UITableViewCell {
     @IBOutlet private weak var timeOfDeliveryLabel: UILabel!
     @IBOutlet private weak var productLocationLabel: UILabel!
     
-    
     public func display(item: Product) {
         productImageView.image = UIImage(named: item.productImage)
         productNameLabel.text = item.productName
