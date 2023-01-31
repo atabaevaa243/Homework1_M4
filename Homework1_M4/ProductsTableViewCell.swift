@@ -16,27 +16,17 @@ class ProductsTableViewCell: UITableViewCell {
     @IBOutlet private weak var timeOfDeliveryLabel: UILabel!
     @IBOutlet private weak var productLocationLabel: UILabel!
     
-    func display(
-        image: String,
-        name: String,
-        time: String,
-        reting: String,
-        country: String,
-        productType: String,
-        delivery: String,
-        deliveryPrice: String,
-        timeOfDelivery: String,
-        location: String
-    ) {
-        productImageView.image = UIImage(named: image)
-        productNameLabel.text = name
-        productTimeLabel.text = time
-        productRetingLabel.text = reting
-        productCountryLabel.text = country
-        productTypeLabel.text = productType
-        productDeliveryLabel.text = delivery
-        productDeliveryPriceLabel.text = deliveryPrice
-        timeOfDeliveryLabel.text = timeOfDelivery
-        productLocationLabel.text = location
+    
+    public func display(item: Product) {
+        productImageView.image = UIImage(named: item.productImage)
+        productNameLabel.text = item.productName
+        productTimeLabel.text = item.productTime
+        productRetingLabel.text = item.productReting
+        productCountryLabel.text = item.productCountry
+        productTypeLabel.text = item.productType
+        productDeliveryLabel.text = item.productDelivery
+        productDeliveryPriceLabel.text = item.productDeliveryPrice
+        timeOfDeliveryLabel.text = item.timeOfDelivery
+        productLocationLabel.text = item.productLocation
     }
 }

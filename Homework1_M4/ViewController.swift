@@ -52,18 +52,6 @@ class ViewController: UIViewController {
                 productDeliveryPrice: "Minimum: $10",
                 timeOfDelivery: "10-15 min",
                 productLocation: "1.8 km away"
-            ),
-            Product(
-                productImage: "burgerImage",
-                productName: "Burger Craze",
-                productTime: "Open",
-                productReting: "4.6 (601)",
-                productCountry: "American",
-                productType: "Burgers",
-                productDelivery: "Delivery: FREE",
-                productDeliveryPrice: "Minimum: $10",
-                timeOfDelivery: "15-20 min",
-                productLocation: "1.5 km away"
             )
     ]
 
@@ -170,16 +158,19 @@ extension ViewController: UITableViewDataSource {
         ) as! ProductsTableViewCell
         let model = productsArray[indexPath.item]
         cell.display(
-            image: model.productImage,
-            name: model.productName,
-            time: model.productTime,
-            reting: model.productReting,
-            country: model.productCountry,
-            productType: model.productType,
-            delivery: model.productDelivery,
-            deliveryPrice: model.productDeliveryPrice,
-            timeOfDelivery: model.timeOfDelivery,
-            location: model.productLocation)
+            item: .init(
+                productImage: model.productImage,
+                productName: model.productName,
+                productTime: model.productTime,
+                productReting: model.productReting,
+                productCountry: model.productCountry,
+                productType: model.productType,
+                productDelivery: model.productDelivery,
+                productDeliveryPrice: model.productDeliveryPrice,
+                timeOfDelivery: model.timeOfDelivery,
+                productLocation: model.productLocation
+            )
+        )
         
         return cell
     }
