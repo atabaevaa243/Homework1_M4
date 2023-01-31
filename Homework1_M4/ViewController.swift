@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet private weak var deliveryCollectionView: UICollectionView!
+    @IBOutlet private weak var searchView: SearchView!
     @IBOutlet private weak var categoryCollectionView: UICollectionView!
     @IBOutlet private weak var productTableView: UITableView!
     
@@ -68,6 +69,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchView.display(item: "Find store by name")
         configureDeliveryCV()
         configureCategoryCV()
         configureProductTV()
