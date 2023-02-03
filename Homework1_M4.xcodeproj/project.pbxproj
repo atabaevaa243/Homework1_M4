@@ -78,26 +78,66 @@
 		4653A7702986CA2D009CD26D /* Homework1_M4 */ = {
 			isa = PBXGroup;
 			children = (
-				4653A7712986CA2D009CD26D /* AppDelegate.swift */,
-				4653A7732986CA2D009CD26D /* SceneDelegate.swift */,
-				4653A7752986CA2D009CD26D /* ViewController.swift */,
+				46665648298D043C00185B7B /* App */,
+				4666564B298D075D00185B7B /* Controller */,
 				4653A7772986CA2D009CD26D /* Main.storyboard */,
+				46665649298D074100185B7B /* Model */,
+				46665647298D041400185B7B /* Resources */,
+				4666564A298D074900185B7B /* View */,
+			);
+			path = Homework1_M4;
+			sourceTree = "<group>";
+		};
+		46665647298D041400185B7B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				4653A77A2986CA2F009CD26D /* Assets.xcassets */,
 				4653A77C2986CA2F009CD26D /* LaunchScreen.storyboard */,
 				4653A77F2986CA2F009CD26D /* Info.plist */,
-				4653A7852986D254009CD26D /* DeliveryCollectionViewCell.swift */,
-				4653A7862986D254009CD26D /* DeliveryCollectionViewCell.xib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		46665648298D043C00185B7B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				4653A7712986CA2D009CD26D /* AppDelegate.swift */,
+				4653A7732986CA2D009CD26D /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		46665649298D074100185B7B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4653A78F2986F465009CD26D /* Category.swift */,
 				4653A7892986DAC8009CD26D /* Delivery.swift */,
+				4653A7952987073F009CD26D /* Product.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4666564A298D074900185B7B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4653A79B29894828009CD26D /* SearchView.swift */,
+				4653A799298945CD009CD26D /* SearchView.xib */,
 				4653A78B2986F0F7009CD26D /* CategoryCollectionViewCell.swift */,
 				4653A78C2986F0F7009CD26D /* CategoryCollectionViewCell.xib */,
-				4653A78F2986F465009CD26D /* Category.swift */,
+				4653A7852986D254009CD26D /* DeliveryCollectionViewCell.swift */,
+				4653A7862986D254009CD26D /* DeliveryCollectionViewCell.xib */,
 				4653A7912986FA4B009CD26D /* ProductsTableViewCell.swift */,
-				4653A7952987073F009CD26D /* Product.swift */,
 				4653A7972987A06A009CD26D /* ProductsTableViewCell.xib */,
-				4653A799298945CD009CD26D /* SearchView.xib */,
-				4653A79B29894828009CD26D /* SearchView.swift */,
 			);
-			path = Homework1_M4;
+			path = View;
+			sourceTree = "<group>";
+		};
+		4666564B298D075D00185B7B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4653A7752986CA2D009CD26D /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,7 +372,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Homework1_M4/Info.plist;
+				INFOPLIST_FILE = Homework1_M4/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -359,7 +399,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Homework1_M4/Info.plist;
+				INFOPLIST_FILE = Homework1_M4/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
