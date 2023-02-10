@@ -13,12 +13,9 @@ class DeliveryCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet private weak var deliveryImageView: UIImageView!
     @IBOutlet private weak var deliveryLabel: UILabel!
-    
-    func display(
-        image: String,
-        title: String
-    ) {
-        deliveryImageView.image = UIImage(named: image)
-        deliveryLabel.text = title
+        
+    func display(item: Delivery) {
+        deliveryImageView.image = UIImage(named: item.deliveryImage)
+        deliveryLabel.text = item.deliveryLabel
     }
 }

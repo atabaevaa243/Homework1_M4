@@ -14,46 +14,11 @@ class ViewController: UIViewController {
     @IBOutlet private weak var categoryCollectionView: UICollectionView!
     @IBOutlet private weak var productTableView: UITableView!
     
-    private let deliveryArray: [Delivery] = [
-        Delivery(deliveryImage: "deliveryIcon", deliveryLabel: "Delivery"),
-        Delivery(deliveryImage: "pickupIcon", deliveryLabel: "Pickup"),
-        Delivery(deliveryImage: "cateringIcon", deliveryLabel: "Catering"),
-        Delivery(deliveryImage: "curbsideIcon", deliveryLabel: "Curbside")
-    ]
+    private var deliveryArray: [Delivery] = []
     
-    private let categoryArray: [Category] = [
-        Category(categoryImage: "takeaways", categoryLabel: "Takeaways"),
-        Category(categoryImage: "grocery", categoryLabel: "Grocery"),
-        Category(categoryImage: "convinience", categoryLabel: "Convinience"),
-        Category(categoryImage: "pharmacy", categoryLabel: "Pharmacy")
-    ]
+    private var categoryArray: [Category] = []
     
-    var productsArray: [Product] = [
-            Product(
-                productImage: "burgerImage",
-                productName: "Burger Craze",
-                productTime: "Open",
-                productReting: "4.6 (601)",
-                productCountry: "American",
-                productType: "Burgers",
-                productDelivery: "Delivery: FREE",
-                productDeliveryPrice: "Minimum: $10",
-                timeOfDelivery: "15-20 min",
-                productLocation: "1.5 km away"
-            ),
-            Product(
-                productImage: "pizzaImage",
-                productName: "Vegetarian Pizza",
-                productTime: "Open",
-                productReting: "4.6 (601)",
-                productCountry: "Italian",
-                productType: "Pizza",
-                productDelivery: "Delivery: FREE",
-                productDeliveryPrice: "Minimum: $10",
-                timeOfDelivery: "10-15 min",
-                productLocation: "1.8 km away"
-            )
-    ]
+    private var productsArray: [Product] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +26,9 @@ class ViewController: UIViewController {
         configureDeliveryCV()
         configureCategoryCV()
         configureProductTV()
+        fetchDelivery()
+        fetchCategory()
+        fetchProduct()
     }
     
     private func configureDeliveryCV() {
@@ -75,6 +43,25 @@ class ViewController: UIViewController {
         )
     }
     
+    private func fetchDelivery() {
+        do {
+            deliveryArray = try NetworkLayerForDelivery.shared.fetchDelivery()
+            deliveryCollectionView.reloadData()
+        } catch {
+            let alert = UIAlertController(
+                title: "Error",
+                message: "\(error.localizedDescription)",
+                preferredStyle: .alert
+            )
+            let acceptAction = UIAlertAction(
+                title: "OK",
+                style: .destructive
+            )
+            alert.addAction(acceptAction)
+            present(alert, animated: true)
+        }
+    }
+    
     private func configureCategoryCV() {
         categoryCollectionView.dataSource = self
         categoryCollectionView.delegate = self
@@ -87,6 +74,25 @@ class ViewController: UIViewController {
         )
     }
     
+    private func fetchCategory() {
+        do {
+            categoryArray = try NetworkLayerForCategory.shared.fetchCategory()
+            categoryCollectionView.reloadData()
+        } catch {
+            let alert = UIAlertController(
+                title: "Error",
+                message: "\(error.localizedDescription)",
+                preferredStyle: .alert
+            )
+            let acceptAction = UIAlertAction(
+                title: "OK",
+                style: .destructive
+            )
+            alert.addAction(acceptAction)
+            present(alert, animated: true)
+        }
+    }
+    
     private func configureProductTV() {
             productTableView.dataSource = self
             productTableView.register(
@@ -96,6 +102,24 @@ class ViewController: UIViewController {
                 ),
                 forCellReuseIdentifier: ProductsTableViewCell.reuseIdentifier)
         }
+    private func fetchProduct() {
+        do {
+            productsArray = try NetworkLayerForProduct.shared.fetchProduct()
+            productTableView.reloadData()
+        } catch {
+            let alert = UIAlertController(
+                title: "Error",
+                message: "\(error.localizedDescription)",
+                preferredStyle: .alert
+            )
+            let acceptAction = UIAlertAction(
+                title: "OK",
+                style: .destructive
+            )
+            alert.addAction(acceptAction)
+            present(alert, animated: true)
+        }
+    }
     }
 
 extension ViewController: UICollectionViewDataSource {
@@ -114,7 +138,7 @@ extension ViewController: UICollectionViewDataSource {
                 for: indexPath
             ) as! DeliveryCollectionViewCell
             let model = deliveryArray[indexPath.item]
-            cell.display(image: model.deliveryImage, title: model.deliveryLabel)
+            cell.display(item: model)
             cell.layer.borderWidth = 0.8
             cell.layer.borderColor = UIColor.lightGray.cgColor
             
@@ -125,7 +149,7 @@ extension ViewController: UICollectionViewDataSource {
                 for: indexPath
             ) as! CategoryCollectionViewCell
             let model = categoryArray[indexPath.item]
-            cell.display(image: model.categoryImage, title: model.categoryLabel)
+            cell.display(item: model)
             
             return cell
         }
@@ -157,21 +181,19 @@ extension ViewController: UITableViewDataSource {
             for: indexPath
         ) as! ProductsTableViewCell
         let model = productsArray[indexPath.item]
-        cell.display(
-            item: .init(
-                productImage: model.productImage,
-                productName: model.productName,
-                productTime: model.productTime,
-                productReting: model.productReting,
-                productCountry: model.productCountry,
-                productType: model.productType,
-                productDelivery: model.productDelivery,
-                productDeliveryPrice: model.productDeliveryPrice,
-                timeOfDelivery: model.timeOfDelivery,
-                productLocation: model.productLocation
-            )
-        )
+        cell.display(item: model)
+        cell.delegate = self
         
         return cell
+    }
+}
+
+extension ViewController: ProductsCellDelegate {
+    func didSelectProduct(item: Product) {
+        let secondVC = storyboard?.instantiateViewController(
+            withIdentifier: "SecondViewController"
+        ) as! SecondViewController
+        secondVC.product = item
+        navigationController?.pushViewController(secondVC, animated: true)
     }
 }
