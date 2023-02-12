@@ -15,9 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet private weak var productTableView: UITableView!
     
     private var deliveryArray: [Delivery] = []
-    
     private var categoryArray: [Category] = []
-    
     private var productsArray: [Product] = []
 
     override func viewDidLoad() {
@@ -29,6 +27,20 @@ class ViewController: UIViewController {
         fetchDelivery()
         fetchCategory()
         fetchProduct()
+    }
+    
+    private func showAlert(_ error: Error) {
+        let alert = UIAlertController(
+            title: "Error",
+            message: "\(error.localizedDescription)",
+            preferredStyle: .alert
+        )
+        let acceptAction = UIAlertAction(
+            title: "OK",
+            style: .destructive
+        )
+        alert.addAction(acceptAction)
+        present(alert, animated: true)
     }
     
     private func configureDeliveryCV() {
@@ -45,20 +57,10 @@ class ViewController: UIViewController {
     
     private func fetchDelivery() {
         do {
-            deliveryArray = try NetworkLayerForDelivery.shared.fetchDelivery()
+            deliveryArray = try NetworkLayer.shared.fetchDelivery()
             deliveryCollectionView.reloadData()
         } catch {
-            let alert = UIAlertController(
-                title: "Error",
-                message: "\(error.localizedDescription)",
-                preferredStyle: .alert
-            )
-            let acceptAction = UIAlertAction(
-                title: "OK",
-                style: .destructive
-            )
-            alert.addAction(acceptAction)
-            present(alert, animated: true)
+            showAlert(error)
         }
     }
     
@@ -76,20 +78,10 @@ class ViewController: UIViewController {
     
     private func fetchCategory() {
         do {
-            categoryArray = try NetworkLayerForCategory.shared.fetchCategory()
+            categoryArray = try NetworkLayer.shared.fetchCategory()
             categoryCollectionView.reloadData()
         } catch {
-            let alert = UIAlertController(
-                title: "Error",
-                message: "\(error.localizedDescription)",
-                preferredStyle: .alert
-            )
-            let acceptAction = UIAlertAction(
-                title: "OK",
-                style: .destructive
-            )
-            alert.addAction(acceptAction)
-            present(alert, animated: true)
+            showAlert(error)
         }
     }
     
@@ -104,20 +96,10 @@ class ViewController: UIViewController {
         }
     private func fetchProduct() {
         do {
-            productsArray = try NetworkLayerForProduct.shared.fetchProduct()
+            productsArray = try NetworkLayer.shared.fetchProduct()
             productTableView.reloadData()
         } catch {
-            let alert = UIAlertController(
-                title: "Error",
-                message: "\(error.localizedDescription)",
-                preferredStyle: .alert
-            )
-            let acceptAction = UIAlertAction(
-                title: "OK",
-                style: .destructive
-            )
-            alert.addAction(acceptAction)
-            present(alert, animated: true)
+            showAlert(error)
         }
     }
     }

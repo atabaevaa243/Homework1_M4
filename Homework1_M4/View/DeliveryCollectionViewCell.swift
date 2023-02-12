@@ -13,6 +13,10 @@ class DeliveryCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet private weak var deliveryImageView: UIImageView!
     @IBOutlet private weak var deliveryLabel: UILabel!
+    
+//    cell.layer.borderWidth = 0.8
+//    cell.layer.borderColor = UIColor.lightGray.cgColor
+
         
     func display(item: Delivery) {
         deliveryImageView.image = UIImage(named: item.deliveryImage)
