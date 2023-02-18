@@ -10,17 +10,17 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet private weak var deliveryCollectionView: UICollectionView!
-    @IBOutlet private weak var searchView: SearchView!
+    @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var categoryCollectionView: UICollectionView!
     @IBOutlet private weak var productTableView: UITableView!
     
     private var deliveryArray: [Delivery] = []
     private var categoryArray: [Category] = []
     private var productsArray: [Product] = []
+    private var isLoading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchView.display(item: "Find store by name")
         configureDeliveryCV()
         configureCategoryCV()
         configureProductTV()
@@ -86,23 +86,48 @@ class ViewController: UIViewController {
     }
     
     private func configureProductTV() {
-            productTableView.dataSource = self
-            productTableView.register(
-                UINib(
-                    nibName: String(describing: ProductsTableViewCell.self),
-                    bundle: nil
-                ),
-                forCellReuseIdentifier: ProductsTableViewCell.reuseIdentifier)
-        }
+        productTableView.dataSource = self
+        productTableView.register(
+            UINib(
+                nibName: String(describing: ProductTableViewCell.self),
+                bundle: nil
+            ),
+            forCellReuseIdentifier: ProductTableViewCell.reuseId
+        )
+    }
+    
     private func fetchProduct() {
-        do {
-            productsArray = try NetworkLayer.shared.fetchProduct()
-            productTableView.reloadData()
-        } catch {
-            showAlert(error)
+        isLoading = true
+        NetworkLayer.shared.fetchProduct { result in
+            self.isLoading = false
+            switch result {
+            case .success(let model):
+                self.productsArray = model
+                DispatchQueue.main.async {
+                    self.productTableView.reloadData()
+                }
+            case .failure(let error):
+                self.showAlert(error)
+            }
         }
     }
+    
+    private func searchProduct(by word: String) {
+        isLoading = true
+        NetworkLayer.shared.searchProduct(by: word) { result in
+            self.isLoading = false
+            switch result {
+            case .success(let model):
+                self.productsArray = model
+                DispatchQueue.main.async {
+                    self.productTableView.reloadData()
+                }
+            case .failure(let error):
+                self.showAlert(error)
+            }
+        }
     }
+}
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -159,9 +184,9 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: ProductsTableViewCell.reuseIdentifier,
+            withIdentifier: ProductTableViewCell.reuseId,
             for: indexPath
-        ) as! ProductsTableViewCell
+        ) as! ProductTableViewCell
         let model = productsArray[indexPath.item]
         cell.display(item: model)
         cell.delegate = self
@@ -170,12 +195,20 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-extension ViewController: ProductsCellDelegate {
+extension ViewController: ProductDelegate {
     func didSelectProduct(item: Product) {
         let secondVC = storyboard?.instantiateViewController(
             withIdentifier: "SecondViewController"
         ) as! SecondViewController
         secondVC.product = item
         navigationController?.pushViewController(secondVC, animated: true)
+    }
+}
+
+extension ViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if !isLoading {
+            searchProduct(by: searchText)
+        }
     }
 }

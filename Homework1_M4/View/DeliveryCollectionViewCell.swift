@@ -23,3 +23,4 @@ class DeliveryCollectionViewCell: UICollectionViewCell {
         deliveryLabel.text = item.deliveryLabel
     }
 }
+ 
