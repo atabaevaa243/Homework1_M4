@@ -1,11 +1,11 @@
 
 import Foundation
 
-struct Products: Decodable {
+struct Products: Codable {
     let products: [Product]
 }
 
-struct Product: Decodable {
+struct Product: Codable {
     var thumbnail: String
     var title: String
     var discountPercentage: Double

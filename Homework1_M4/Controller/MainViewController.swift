@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Homework1_M4
 //
 //  Created by Aziza A on 29/1/23.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     
     @IBOutlet private weak var deliveryCollectionView: UICollectionView!
     @IBOutlet private weak var searchBar: UISearchBar!
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         fetchProduct()
     }
     
-    private func showAlert(_ error: Error) {
+    private func showError(_ error: Error) {
         let alert = UIAlertController(
             title: "Error",
             message: "\(error.localizedDescription)",
@@ -55,15 +55,6 @@ class ViewController: UIViewController {
         )
     }
     
-    private func fetchDelivery() {
-        do {
-            deliveryArray = try NetworkLayer.shared.fetchDelivery()
-            deliveryCollectionView.reloadData()
-        } catch {
-            showAlert(error)
-        }
-    }
-    
     private func configureCategoryCV() {
         categoryCollectionView.dataSource = self
         categoryCollectionView.delegate = self
@@ -74,15 +65,6 @@ class ViewController: UIViewController {
             ),
             forCellWithReuseIdentifier: CategoryCollectionViewCell.reuseIdentifier
         )
-    }
-    
-    private func fetchCategory() {
-        do {
-            categoryArray = try NetworkLayer.shared.fetchCategory()
-            categoryCollectionView.reloadData()
-        } catch {
-            showAlert(error)
-        }
     }
     
     private func configureProductTV() {
@@ -96,6 +78,24 @@ class ViewController: UIViewController {
         )
     }
     
+    private func fetchDelivery() {
+        do {
+            deliveryArray = try NetworkLayer.shared.fetchDelivery()
+            deliveryCollectionView.reloadData()
+        } catch {
+            showError(error)
+        }
+    }
+    
+    private func fetchCategory() {
+        do {
+            categoryArray = try NetworkLayer.shared.fetchCategory()
+            categoryCollectionView.reloadData()
+        } catch {
+            showError(error)
+        }
+    }
+    
     private func fetchProduct() {
         isLoading = true
         NetworkLayer.shared.fetchProduct { result in
@@ -107,7 +107,7 @@ class ViewController: UIViewController {
                     self.productTableView.reloadData()
                 }
             case .failure(let error):
-                self.showAlert(error)
+                self.showError(error)
             }
         }
     }
@@ -123,13 +123,31 @@ class ViewController: UIViewController {
                     self.productTableView.reloadData()
                 }
             case .failure(let error):
-                self.showAlert(error)
+                self.showError(error)
+            }
+        }
+    }
+    
+    private func deleteProduct() {
+        isLoading = true
+        NetworkLayer.shared.deleteProduct { result in
+            self.isLoading = false
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    let indexPath = IndexPath(row: 0, section: 0)
+                    self.productsArray.remove(at: indexPath.row)
+                    self.productTableView.deleteRows(at: [indexPath], with: .automatic)
+                    self.productTableView.reloadData()
+                }
+            case .failure(let error):
+                self.showError(error)
             }
         }
     }
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == deliveryCollectionView {
             return deliveryArray.count
@@ -163,7 +181,7 @@ extension ViewController: UICollectionViewDataSource {
     }
 }
 
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -177,7 +195,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return productsArray.count
     }
@@ -189,26 +207,47 @@ extension ViewController: UITableViewDataSource {
         ) as! ProductTableViewCell
         let model = productsArray[indexPath.item]
         cell.display(item: model)
-        cell.delegate = self
         
         return cell
     }
-}
-
-extension ViewController: ProductDelegate {
-    func didSelectProduct(item: Product) {
-        let secondVC = storyboard?.instantiateViewController(
-            withIdentifier: "SecondViewController"
-        ) as! SecondViewController
-        secondVC.product = item
-        navigationController?.pushViewController(secondVC, animated: true)
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("Delete product")
+            self.deleteProduct()
+        }
     }
 }
 
-extension ViewController: UISearchBarDelegate {
+extension MainViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !isLoading {
             searchProduct(by: searchText)
         }
     }
 }
+
+//    func tableView(
+//        _ tableView: UITableView,
+//        editActionsForRowAt indexPath: IndexPath
+//    ) -> UITableViewRowAction? {
+//        let deleteAction = UITableViewRowAction(style: .destructive, title: "Удалить") { (_, indexPath) in
+//            self.productsArray.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//            tableView.reloadData()
+//        }
+//        return deleteAction
+//    }
+
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let deleteAction = UIContextualAction(style: .destructive, title: "") { _, _, completionHandler in
+//            self.productsArray.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//            completionHandler(true)
+//        }
+//        deleteAction.image = UIImage(systemName: "trash")
+//        deleteAction.backgroundColor = .systemRed
+//        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+//        config.performsFirstActionWithFullSwipe = false
+//        return config
+//    }

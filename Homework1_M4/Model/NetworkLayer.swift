@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum HTTPRequest: String {
+case GET, POST, PUT, DELETE
+}
+
 final class NetworkLayer {
     static let shared = NetworkLayer()
     
@@ -30,6 +34,16 @@ final class NetworkLayer {
         .resume()
     }
     
+    func fetchCategory() throws -> [Category] {
+        let data = Data(categoryJSON.utf8)
+        return try decode(with: data)
+    }
+    
+    func fetchDelivery() throws -> [Delivery] {
+        let data = Data(deliveryJSON.utf8)
+        return try decode(with: data)
+    }
+    
     func searchProduct(by word: String, completion: @escaping (Result<[Product], Error>) -> Void) {
         let url = baseURL.appendingPathComponent("search")
         
@@ -51,17 +65,45 @@ final class NetworkLayer {
         }
     }
     
-    func fetchCategory() throws -> [Category] {
-        let data = Data(categoryJSON.utf8)
-        return try decode(with: data)
+    func addNewProduct(with model: Product, completion: @escaping (Result<Void, Error>) -> Void) {
+        let url = baseURL.appendingPathComponent("add")
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPRequest.POST.rawValue
+        request.httpBody = encode(with: model)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            
+            if let data = data {
+                completion(.success(()))
+            }
+        }
+        .resume()
     }
     
-    func fetchDelivery() throws -> [Delivery] {
-        let data = Data(deliveryJSON.utf8)
-        return try decode(with: data)
+    func deleteProduct(completion: @escaping (Result<Void, Error>) -> Void) {
+        var request = URLRequest(url: baseURL)
+        request.httpMethod = HTTPRequest.DELETE.rawValue
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            
+            if let data = data {
+                completion(.success(()))
+            }
+        }
+        .resume()
     }
     
     func decode<T: Decodable>(with data: Data) -> T {
-       try! JSONDecoder().decode(T.self, from: data)
+        try! JSONDecoder().decode(T.self, from: data)
+    }
+    
+    func encode<T: Encodable>(with model: T) -> Data {
+        try! JSONEncoder().encode(model)
     }
 }
