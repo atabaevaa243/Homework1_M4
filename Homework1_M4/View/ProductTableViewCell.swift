@@ -22,7 +22,7 @@ extension UIImageView {
     }
 }
 
-protocol ProductDelegate: AnyObject {
+protocol ProductCellDelegate: AnyObject {
     func didSelectProduct(item: Product)
 }
 
@@ -46,7 +46,7 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet weak var stockLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     
-    weak var delegate: ProductDelegate?
+    weak var delegate: ProductCellDelegate?
     private var product: Product?
     
     func display(item: Product) {

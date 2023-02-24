@@ -6,6 +6,7 @@ struct Products: Codable {
 }
 
 struct Product: Codable {
+    var id: Int
     var thumbnail: String
     var title: String
     var discountPercentage: Double

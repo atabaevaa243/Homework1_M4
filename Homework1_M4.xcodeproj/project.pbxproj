@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		460D5BD029A0DD9C00313233 /* ProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 460D5BCF29A0DD9C00313233 /* ProductTableViewCell.xib */; };
 		460D5BD229A538A800313233 /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460D5BD129A538A800313233 /* AddProductViewController.swift */; };
+		4632436F29A917BF00F1F07F /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4632436E29A917BF00F1F07F /* SecondViewController.swift */; };
 		4653A7722986CA2D009CD26D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4653A7712986CA2D009CD26D /* AppDelegate.swift */; };
 		4653A7742986CA2D009CD26D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4653A7732986CA2D009CD26D /* SceneDelegate.swift */; };
 		4653A7762986CA2D009CD26D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4653A7752986CA2D009CD26D /* MainViewController.swift */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		460D5BCF29A0DD9C00313233 /* ProductTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductTableViewCell.xib; sourceTree = "<group>"; };
 		460D5BD129A538A800313233 /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
+		4632436E29A917BF00F1F07F /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		4653A76E2986CA2D009CD26D /* Homework1_M4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homework1_M4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4653A7712986CA2D009CD26D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4653A7732986CA2D009CD26D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			children = (
 				4653A7752986CA2D009CD26D /* MainViewController.swift */,
 				460D5BD129A538A800313233 /* AddProductViewController.swift */,
+				4632436E29A917BF00F1F07F /* SecondViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4632436F29A917BF00F1F07F /* SecondViewController.swift in Sources */,
 				4653A7872986D254009CD26D /* DeliveryCollectionViewCell.swift in Sources */,
 				460D5BD229A538A800313233 /* AddProductViewController.swift in Sources */,
 				4653A7932986FA4B009CD26D /* ProductTableViewCell.swift in Sources */,

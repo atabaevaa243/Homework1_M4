@@ -14,10 +14,6 @@ class AddProductViewController: UIViewController {
     @IBOutlet weak var descriptionTextfield: UITextField!
     @IBOutlet weak var categoryTextfield: UITextField!
     @IBOutlet weak var brandTextfield: UITextField!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     @IBAction private func addProductTapped() {
         guard
@@ -30,6 +26,7 @@ class AddProductViewController: UIViewController {
         }
         
         let product = Product(
+            id: 0,
             thumbnail: "",
             title: title,
             discountPercentage: 0,

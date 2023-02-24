@@ -29,6 +29,20 @@ class MainViewController: UIViewController {
         fetchProduct()
     }
     
+    private func showAlert(with message: String) {
+        let alert = UIAlertController(
+            title: "Удаление",
+            message: message,
+            preferredStyle: .alert
+        )
+        let acceptAction = UIAlertAction(
+            title: "OK",
+            style: .cancel
+        )
+        alert.addAction(acceptAction)
+        present(alert, animated: true)
+    }
+    
     private func showError(_ error: Error) {
         let alert = UIAlertController(
             title: "Error",
@@ -128,17 +142,14 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func deleteProduct() {
+    private func deleteProduct(by id: Int) {
         isLoading = true
-        NetworkLayer.shared.deleteProduct { result in
+        NetworkLayer.shared.deleteProduct(with: id) { result in
             self.isLoading = false
             switch result {
-            case .success(_):
+            case .success():
                 DispatchQueue.main.async {
-                    let indexPath = IndexPath(row: 0, section: 0)
-                    self.productsArray.remove(at: indexPath.row)
-                    self.productTableView.deleteRows(at: [indexPath], with: .automatic)
-                    self.productTableView.reloadData()
+                self.showAlert(with: "Продукт успешно удален!")
                 }
             case .failure(let error):
                 self.showError(error)
@@ -207,14 +218,17 @@ extension MainViewController: UITableViewDataSource {
         ) as! ProductTableViewCell
         let model = productsArray[indexPath.item]
         cell.display(item: model)
+        cell.delegate = self
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print("Delete product")
-            self.deleteProduct()
+            let id = productsArray[indexPath.row].id
+            deleteProduct(by: id)
+            productsArray.remove(at: indexPath.row)
+            productTableView.reloadData()
         }
     }
 }
@@ -227,27 +241,12 @@ extension MainViewController: UISearchBarDelegate {
     }
 }
 
-//    func tableView(
-//        _ tableView: UITableView,
-//        editActionsForRowAt indexPath: IndexPath
-//    ) -> UITableViewRowAction? {
-//        let deleteAction = UITableViewRowAction(style: .destructive, title: "Удалить") { (_, indexPath) in
-//            self.productsArray.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//            tableView.reloadData()
-//        }
-//        return deleteAction
-//    }
-
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let deleteAction = UIContextualAction(style: .destructive, title: "") { _, _, completionHandler in
-//            self.productsArray.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//            completionHandler(true)
-//        }
-//        deleteAction.image = UIImage(systemName: "trash")
-//        deleteAction.backgroundColor = .systemRed
-//        let config = UISwipeActionsConfiguration(actions: [deleteAction])
-//        config.performsFirstActionWithFullSwipe = false
-//        return config
-//    }
+extension MainViewController: ProductCellDelegate {
+    func didSelectProduct(item: Product) {
+        let secondVC = storyboard?.instantiateViewController(
+            withIdentifier: "SecondViewController"
+        ) as! SecondViewController
+        secondVC.product = item
+        navigationController?.pushViewController(secondVC, animated: true)
+    }
+}

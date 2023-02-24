@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Homework1_M4" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="Homework1_M4" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -112,6 +112,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3706.1068702290077" y="-2.1126760563380285"/>
+        </scene>
+        <!--Second View Controller-->
+        <scene sceneID="bvT-mE-lxn">
+            <objects>
+                <viewController storyboardIdentifier="SecondViewController" id="REr-st-XOQ" customClass="SecondViewController" customModule="Homework1_M4" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jte-VJ-MOh">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="H40-RA-nkz">
+                                <rect key="frame" x="15" y="113" width="363" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="L3o-WI-HUH"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Icf-WH-xYA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="H40-RA-nkz" firstAttribute="top" secondItem="Icf-WH-xYA" secondAttribute="top" constant="10" id="2tM-wX-2jd"/>
+                            <constraint firstItem="H40-RA-nkz" firstAttribute="leading" secondItem="Icf-WH-xYA" secondAttribute="leading" constant="15" id="FpP-dF-EMg"/>
+                            <constraint firstItem="Icf-WH-xYA" firstAttribute="trailing" secondItem="H40-RA-nkz" secondAttribute="trailing" constant="15" id="gQr-HA-P4x"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="N2f-lk-G2M"/>
+                    <connections>
+                        <outlet property="productImageView" destination="H40-RA-nkz" id="FoC-qb-eve"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZVe-ed-bIO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5562.5954198473282" y="-2.1126760563380285"/>
         </scene>
         <!--Add Product View Controller-->
         <scene sceneID="PU0-30-TVL">
@@ -290,6 +322,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="wyW-fQ-pbT" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Mkw-6L-aic">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.96729008838383834" green="0.96729008838383834" blue="0.96729008838383834" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </tabBar>
@@ -306,7 +339,7 @@
         <scene sceneID="zxq-Bw-9Ie">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bdZ-57-T1v" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Add product" image="person" catalog="system" id="0g3-we-Qx0"/>
+                    <tabBarItem key="tabBarItem" title="Add product" image="plus" catalog="system" id="0g3-we-Qx0"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uN0-jT-2KP">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -340,10 +373,28 @@
             </objects>
             <point key="canvasLocation" x="2779.3893129770991" y="-2.1126760563380285"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6O2-MD-28b">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vgm-PI-Ftb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pYs-Ae-WlE">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="REr-st-XOQ" kind="relationship" relationship="rootViewController" id="nik-sD-JGg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rKX-RG-Ret" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4635.8778625954201" y="-2.1126760563380285"/>
+        </scene>
     </scenes>
     <resources>
         <image name="house" catalog="system" width="128" height="104"/>
-        <image name="person" catalog="system" width="128" height="121"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
