@@ -10,6 +10,7 @@ import UIKit
 class SecondViewController: UIViewController {
     
     @IBOutlet private weak var productImageView: UIImageView!
+    @IBOutlet private weak var prodTitle: UILabel!
     var product: Product?
 
     override func viewDidLoad() {
@@ -22,5 +23,6 @@ class SecondViewController: UIViewController {
             return
         }
         productImageView.image = UIImage(named: product.thumbnail)
+        prodTitle.text = product.title
     }
 }

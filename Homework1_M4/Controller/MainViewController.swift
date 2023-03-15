@@ -92,6 +92,22 @@ class MainViewController: UIViewController {
         )
     }
     
+    private func fetchProduct() {
+        isLoading = true
+        Task {
+            do {
+                let model = try await NetworkLayer.shared.fetchProduct()
+                isLoading = false
+                productsArray = model
+                DispatchQueue.main.async {
+                    self.productTableView.reloadData()
+                }
+            } catch {
+                self.showError(error)
+            }
+        }
+    }
+    
     private func fetchDelivery() {
         do {
             deliveryArray = try NetworkLayer.shared.fetchDelivery()
@@ -110,33 +126,17 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func fetchProduct() {
-        isLoading = true
-        NetworkLayer.shared.fetchProduct { result in
-            self.isLoading = false
-            switch result {
-            case .success(let model):
-                self.productsArray = model
-                DispatchQueue.main.async {
-                    self.productTableView.reloadData()
-                }
-            case .failure(let error):
-                self.showError(error)
-            }
-        }
-    }
-    
     private func searchProduct(by word: String) {
         isLoading = true
-        NetworkLayer.shared.searchProduct(by: word) { result in
-            self.isLoading = false
-            switch result {
-            case .success(let model):
-                self.productsArray = model
+        Task {
+            do {
+                let model = try await NetworkLayer.shared.searchProduct(by: word)
+                isLoading = false
+                productsArray = model
                 DispatchQueue.main.async {
                     self.productTableView.reloadData()
                 }
-            case .failure(let error):
+            } catch {
                 self.showError(error)
             }
         }
@@ -144,14 +144,14 @@ class MainViewController: UIViewController {
     
     private func deleteProduct(by id: Int) {
         isLoading = true
-        NetworkLayer.shared.deleteProduct(with: id) { result in
-            self.isLoading = false
-            switch result {
-            case .success():
+        Task {
+            do {
+                try await NetworkLayer.shared.deleteProduct(with: id)
+                isLoading = false
                 DispatchQueue.main.async {
-                self.showAlert(with: "Продукт успешно удален!")
+                    self.showAlert(with: "Продукт успешно удален!")
                 }
-            case .failure(let error):
+            } catch {
                 self.showError(error)
             }
         }

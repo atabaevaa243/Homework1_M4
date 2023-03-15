@@ -127,6 +127,13 @@
                                     <constraint firstAttribute="height" constant="200" id="L3o-WI-HUH"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZuE-tN-fqp">
+                                <rect key="frame" x="175" y="396" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Icf-WH-xYA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -138,6 +145,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="N2f-lk-G2M"/>
                     <connections>
+                        <outlet property="prodTitle" destination="ZuE-tN-fqp" id="gbk-x1-urE"/>
                         <outlet property="productImageView" destination="H40-RA-nkz" id="FoC-qb-eve"/>
                     </connections>
                 </viewController>

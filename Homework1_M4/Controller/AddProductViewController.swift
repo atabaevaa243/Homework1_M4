@@ -39,20 +39,27 @@ class AddProductViewController: UIViewController {
         
         addNew(product)
     }
-    
+
     private func addNew(_ product: Product) {
-        NetworkLayer.shared.addNewProduct(with: product) { result in
-            switch result {
-            case .success:
+        Task {
+            do {
+                try await NetworkLayer.shared.addNewProduct(with: product)
                 DispatchQueue.main.async {
                     self.showAlert(with: "Продукт успешно добавлен!")
+                    self.clearAllTextfields()
                 }
-            case .failure:
-                DispatchQueue.main.async {
-                    self.showAlert(with: "Данные введены неверно")
-                }
+            } catch {
+                self.showAlert(with: "Данные введены неверно")
             }
         }
+    }
+    
+    private func clearAllTextfields() {
+        titleTextfield.text?.removeAll()
+        priceTextfield.text?.removeAll()
+        descriptionTextfield.text?.removeAll()
+        categoryTextfield.text?.removeAll()
+        brandTextfield.text?.removeAll()
     }
     
     private func showAlert(with message: String) {
